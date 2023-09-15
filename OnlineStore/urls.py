@@ -16,11 +16,20 @@ Including another URLconf
 """
 from django.contrib import admin
 from django.urls import path
-from store.views import hello_func,date_func,good_by_user_func
+from store import views as view
+from django.conf import settings
+from django.conf.urls.static import static
+...
+
+# Эти строки — в самый конец файла:
 
 urlpatterns = [
     path('admin/', admin.site.urls),
-    path("hello/",hello_func),
-    path("now_date/",date_func),
-    path("goodby/",good_by_user_func),
+    path("", view.main_view),
+    path("products/", view.products_view),
 ]
+
+if settings.DEBUG:
+    urlpatterns += static(settings.STATIC_URL, document_root=settings.STATIC_ROOT)
+    urlpatterns += static(settings.MEDIA_URL, document_root=settings.MEDIA_ROOT)
+

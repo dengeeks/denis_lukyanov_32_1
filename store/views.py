@@ -1,15 +1,15 @@
 from django.shortcuts import render
-from django.shortcuts import HttpResponse
 # Create your views here.
-from datetime import datetime
+from store.models import Store
 
 
-def hello_func(request):
-    return HttpResponse('Hello! Its my project')
+def main_view(request):
+    return render(request, template_name='layouts/index.html')
 
 
-def date_func(request):
-    return HttpResponse(f'Сегодняшняя дата - {datetime.now()}')
-
-def good_by_user_func(request):
-    return HttpResponse('Goodby User!')
+def products_view(request):
+    product = Store.objects.all()
+    context_data = {
+        'products': product
+    }
+    return render(request, 'products/products.html', context=context_data)

@@ -1,0 +1,17 @@
+{% extends 'layouts/index.html' %}
+{% load thumbnail %}
+
+{% block content %}
+     <div class="productImg">
+         {% for product in products %}
+             <img src="{{ product.image.url }}" style="max-width: 200px; max-height: 200px;">
+             <h2 style="font-size: 14px;">{{ product.title }}</h2>
+             <h3 style="font-size: 14px;">{{ product.price }}"</h3>
+             <h4 style="font-size: 12px;">{{ product.description }}</h4>
+             <h5 style="font-size: 12px;">{{ product.parameters }}</h5>
+             <h6 style="font-size: 12px;">{{ product.rate }}</h6>
+         {% endfor %}
+     </div>
+{% endblock %}
+
+
