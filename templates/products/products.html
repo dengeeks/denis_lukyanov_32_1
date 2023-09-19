@@ -1,8 +1,9 @@
 {% extends 'layouts/index.html' %}
 {% load thumbnail %}
 
+
 {% block content %}
-     <div class="productImg">
+    <div class="productImg">
          {% for product in products %}
              <img src="{{ product.image.url }}" style="max-width: 200px; max-height: 200px;">
              <h2 style="font-size: 14px;">{{ product.title }}</h2>
@@ -13,5 +14,3 @@
          {% endfor %}
      </div>
 {% endblock %}
-
-

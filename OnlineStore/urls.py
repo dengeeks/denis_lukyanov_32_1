@@ -19,17 +19,18 @@ from django.urls import path
 from store import views as view
 from django.conf import settings
 from django.conf.urls.static import static
+
 ...
 
 # Эти строки — в самый конец файла:
 
 urlpatterns = [
     path('admin/', admin.site.urls),
-    path("", view.main_view),
-    path("products/", view.products_view),
+    path("", view.main_view, name='main-menu'),
+    path("products/", view.products_view,name='product_menu'),
+    path('category',view.category_view,name='category_menu')
 ]
 
 if settings.DEBUG:
     urlpatterns += static(settings.STATIC_URL, document_root=settings.STATIC_ROOT)
     urlpatterns += static(settings.MEDIA_URL, document_root=settings.MEDIA_ROOT)
-
