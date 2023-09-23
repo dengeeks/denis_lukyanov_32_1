@@ -1,0 +1,21 @@
+{% extends 'layouts/index.html' %}
+{% load static %}
+
+{% block css_add %}
+    <link rel="stylesheet" href="{% static 'css/details.css'%}">
+{% endblock %}
+
+
+{% block content %}
+
+    <div class="info">
+        <img src="{{ product.image.url }}" alt="" width="20%">
+        <h1>{{ product.title }}</h1>
+        <h1>{{ product.price }} сом</h1>
+        <h3>{{ product.parameters }}</h3>
+        <h5>{{ product.description }}</h5>
+        <h6>Категория товара: {{ category.title }}
+            <img src="{{ category.icon.url }}" alt="" width="5%">
+        </h6>
+    </div>
+{% endblock %}
