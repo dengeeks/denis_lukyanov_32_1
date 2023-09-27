@@ -29,6 +29,7 @@ urlpatterns = [
     path('admin/', admin.site.urls),
     path("", view.main_view, name='main-menu'),
     path("products/", view.products_view,name='product_menu'),
+    path('products/create/', view.create_products),
     path('products/<slug:slug_product>/', view.get_full_info_of_product,name='full_info'),
     path('category/',view.category_view,name='category_menu'),
     path('category/<int:category_id>/',view.get_products_by_category,name='category_name')
