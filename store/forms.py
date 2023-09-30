@@ -1,14 +1,11 @@
 from django import forms
-from store.models import Category, Review
+from store.models import Review, Product
 
 
-class ProductCreateForm(forms.Form):
-    image = forms.FileField(required=False)
-    title = forms.CharField(max_length=64)
-    parameters = forms.CharField(max_length=512, widget=forms.Textarea)
-    description = forms.CharField(widget=forms.Textarea)
-    category_name = forms.ModelChoiceField(queryset=Category.objects.all())
-    price = forms.FloatField()
+class ProductCreateForm(forms.ModelForm):
+    class Meta:
+        model = Product
+        fields = ('image', 'title', 'parameters', 'description', 'category_name', 'price')
 
 
 class ReviewCreateForm(forms.ModelForm):

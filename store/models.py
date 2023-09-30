@@ -1,5 +1,6 @@
 from django.db import models
 from autoslug import AutoSlugField
+from django.contrib.auth.models import User
 
 
 # Create your models here.
@@ -22,11 +23,12 @@ class Review(models.Model):
 
 
 class Product(models.Model):
+    author_name = models.ForeignKey(User,on_delete=models.CASCADE,null=True)
     image = models.ImageField(upload_to='store_image', blank=True, null=True)
     title = models.CharField(max_length=64)
     parameters = models.TextField()
     description = models.TextField()
-    category_name = models.ForeignKey(Category, on_delete=models.CASCADE, null=True)
+    category_name = models.ForeignKey(Category, on_delete=models.CASCADE,null=True)
     slug = AutoSlugField(populate_from='title', unique=True, db_index=True)
 
     price = models.FloatField()

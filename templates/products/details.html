@@ -9,7 +9,9 @@
 {% block content %}
 
     <div class="info">
+        {% if product.image %}
         <img src="{{ product.image.url }}" alt="" width="20%">
+        {% endif %}
         <h1>{{ product.title }}</h1>
         <h1>{{ product.price }} сом</h1>
         <h3>{{ product.parameters }}</h3>
@@ -18,6 +20,7 @@
             <img src="{{ category.icon.url }}" alt="" width="5%">
         </h6>
         <form action="/products/{{ product.slug }}/" method="POST" enctype="multipart/form-data">
+            <p>Автор товара <strong>{{ product.author_name.username }}</strong></p>
         {% csrf_token %}
         {{ form.as_p }}
         <input type="submit" value="Отправить">

@@ -5,7 +5,11 @@ from store.forms import ProductCreateForm, ReviewCreateForm
 
 
 def main_view(request):
-    return render(request, template_name='layouts/index.html')
+    print(request.user.id)
+    context_data = {
+        'user': request.user
+    }
+    return render(request, template_name='layouts/index.html',context=context_data)
 
 
 def products_view(request):
@@ -69,18 +73,13 @@ def create_products(request):
         }
         return render(request, 'products/create.html', context=context_data)
     if request.method == 'POST':
-        data, files = request.POST, request.FILES
-        form = ProductCreateForm(data, files)
+        data,file = request.POST, request.FILES
+        form = ProductCreateForm(data,file)
 
         if form.is_valid():
-            Product.objects.create(
-                image=form.cleaned_data.get('image'),
-                title=form.cleaned_data.get('title'),
-                parameters=form.cleaned_data.get('parameters'),
-                description=form.cleaned_data.get('description'),
-                category_name=form.cleaned_data.get('category_name'),
-                price=form.cleaned_data.get('price'),
-            )
+            product = form.save(commit=False)
+            product.author_name = request.user
+            product.save()
             return redirect('/products/')
 
         context_data = {
