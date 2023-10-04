@@ -1,4 +1,6 @@
 from django.shortcuts import render, redirect
+
+from store.constants import PAGINATION_LIMIT
 # Create your views here.
 from store.models import Product, Category, Review
 from store.forms import ProductCreateForm, ReviewCreateForm
@@ -9,13 +11,26 @@ def main_view(request):
     context_data = {
         'user': request.user
     }
-    return render(request, template_name='layouts/index.html',context=context_data)
+    return render(request, template_name='layouts/index.html', context=context_data)
 
 
 def products_view(request):
-    product = Product.objects.all()
+    products = Product.objects.all()
+    search = request.GET.get('search')
+    page = int(request.GET.get('page', 1))
+
+    max_page = products.__len__() / PAGINATION_LIMIT
+    if round(max_page) < max_page:
+        max_page = round(max_page) + 1
+    else:
+        max_page = round(max_page)
+
+    if search:
+        products = products.filter(title__icontains=search)
+    products = products[PAGINATION_LIMIT * (page - 1): PAGINATION_LIMIT * page]
     context_data = {
-        'products': product
+        'products': products,
+        'max_page': range(1, max_page + 1)
     }
     return render(request, 'products/products.html', context=context_data)
 
@@ -73,8 +88,8 @@ def create_products(request):
         }
         return render(request, 'products/create.html', context=context_data)
     if request.method == 'POST':
-        data,file = request.POST, request.FILES
-        form = ProductCreateForm(data,file)
+        data, file = request.POST, request.FILES
+        form = ProductCreateForm(data, file)
 
         if form.is_valid():
             product = form.save(commit=False)

@@ -4,26 +4,36 @@
 
 
 {% block content %}
+    <form action="/products" method="get">
+        <input type="text" name="search">
+        <input type="submit" value="Search">
+    </form>
 
-        {% for product in products %}
-            <div class="card mb-3" style="max-width: 540px;">
-  <div class="row g-0">
-    <div class="col-md-4">
-        <a href="{% url 'full_info' product.slug %}">
-            {% if product.image %}
-            <img src="{{ product.image.url }}" class="img-fluid rounded-start" alt="...">
-            {% endif %}
-        </a>
-    </div>
-    <div class="col-md-8">
-      <div class="card-body">
-          <a href="{% url 'full_info' product.slug %}"><h5 class="card-title">{{ product.title }}</h5></a>
-        <p class="card-text">{{ product.parameters }}</p>
-        <p class="card-text"><small class="text-muted">Цена: {{ product.price }} сом</small></p>
-      </div>
-    </div>
-  </div>
-</div>
+    {% for product in products %}
+        <div class="card mb-3" style="max-width: 540px;">
+            <div class="row g-0">
+                <div class="col-md-4">
+                    <a href="{% url 'full_info' product.slug %}">
+                        {% if product.image %}
+                            <img src="{{ product.image.url }}" class="img-fluid rounded-start" alt="...">
+                        {% endif %}
+                    </a>
+                </div>
+                <div class="col-md-8">
+                    <div class="card-body">
+                        <a href="{% url 'full_info' product.slug %}"><h5 class="card-title">{{ product.title }}</h5></a>
+                        <p class="card-text">{{ product.parameters }}</p>
+                        <p class="card-text"><small class="text-muted">Цена: {{ product.price }} сом</small></p>
+                    </div>
+                </div>
+            </div>
+        </div>
+    {% endfor %}
+    <div class="pages" style="display : flex; justify-content: center;">
+        {% for page in max_page %}
+            <a href="/products/?page={{ page }}">
+                <button>{{ page }}</button>
+            </a>
         {% endfor %}
-
+    </div>
 {% endblock %}
